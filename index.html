@@ -40,24 +40,31 @@
     .controls {
       display: flex;
       justify-content: center;
+      align-items: flex-end; /* 讓按鈕底部對齊 */
       gap: 10px;
       margin-top: 20px;
-      align-items: flex-start;
+      position: relative;
+      height: 60px; /* 給足夠空間放提示文字 */
     }
 
-    /* 包住靜音按鈕和提示文字的容器 */
+    /* 包住靜音按鈕的容器，方便定位提示文字 */
     .mute-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      position: relative;
       width: 100px;
+      flex-shrink: 0;
     }
 
+    /* 提示文字用絕對定位，不占空間 */
     .mute-hint {
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 12px;
       color: #555;
-      margin-bottom: 6px;
       user-select: none;
+      white-space: nowrap;
+      pointer-events: none; /* 文字不會影響點擊 */
     }
 
     button {
@@ -71,6 +78,7 @@
       font-size: 14px;
       white-space: nowrap;
       transition: background-color 0.2s;
+      flex-shrink: 0;
     }
 
     button:hover {
@@ -94,7 +102,7 @@
       <button onclick="restartAudio()">🔁 重新播放</button>
 
       <div class="mute-container">
-        <div class="mute-hint">點擊下方按鈕為你唱歌♫~</div>
+        <div class="mute-hint">⬇️點擊為你唱歌♫~</div>
         <button onclick="toggleMute()" id="muteBtn">🔇 靜音</button>
       </div>
     </div>
