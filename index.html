@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Happy Birthday</title>
   <style>
     body {
@@ -39,15 +39,32 @@
 
     .controls {
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin-top: 20px;
+    }
+
+    .controls .hint {
+      width: 120px;
+      font-size: 12px;
+      color: #555;
+      user-select: none;
+    }
+
+    .buttons {
+      display: flex;
       flex-direction: row;
       justify-content: center;
       align-items: center;
       gap: 10px;
       flex-wrap: nowrap;
-      margin-top: 20px;
+      width: 100%;
+      max-width: 360px;
     }
 
-    .controls button {
+    .buttons button {
+      flex: none;
       width: 100px;
       padding: 8px;
       border: none;
@@ -60,11 +77,11 @@
       transition: background-color 0.2s;
     }
 
-    .controls button:hover {
+    .buttons button:hover {
       background-color: #2a7357;
     }
 
-    .controls button:active {
+    .buttons button:active {
       background-color: #3ca27a; /* 點擊時維持淺綠色 */
     }
   </style>
@@ -73,23 +90,27 @@
 
   <div class="card">
     <div class="gif-container">
-      <img src="images/BirthdayCard.gif" alt="生日GIF">
+      <img src="images/BirthdayCard.gif" alt="生日GIF" />
     </div>
 
     <div class="controls">
-      <button onclick="togglePlay()">⏯️ 播放/暫停</button>
-      <button onclick="restartAudio()">🔁 重新播放</button>
-      <button onclick="toggleMute()">🔇 靜音</button>
+      <div class="hint">點擊下方按鈕為你唱首歌♫~</div>
+      <div class="buttons">
+        <button onclick="togglePlay()">⏯️ 播放/暫停</button>
+        <button onclick="restartAudio()">🔁 重新播放</button>
+        <button onclick="toggleMute()" id="muteBtn">🔇 靜音</button>
+      </div>
     </div>
 
-    <audio id="birthdaySong" autoplay loop>
-      <source src="music/hbdsong.mp3" type="audio/mpeg">
+    <audio id="birthdaySong" autoplay loop muted>
+      <source src="music/hbdsong.mp3" type="audio/mpeg" />
       您的瀏覽器不支援音樂播放。
     </audio>
   </div>
 
   <script>
     const audio = document.getElementById("birthdaySong");
+    const muteBtn = document.getElementById("muteBtn");
 
     function togglePlay() {
       if (audio.paused) {
@@ -106,6 +127,11 @@
 
     function toggleMute() {
       audio.muted = !audio.muted;
+      if (audio.muted) {
+        muteBtn.textContent = '🔇 靜音';
+      } else {
+        muteBtn.textContent = '🔊 有聲音';
+      }
     }
 
     document.addEventListener('click', () => {
